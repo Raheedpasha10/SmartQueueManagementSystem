@@ -1,0 +1,15 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin and protected routes
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /appointments/
+Disallow: /settings/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://mediqueue.vercel.app/sitemap.xml
+

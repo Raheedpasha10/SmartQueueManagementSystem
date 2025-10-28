@@ -1,0 +1,28 @@
+# Documentation files (keep in git, exclude from deployment)
+*.md
+!README.md
+
+# SQL files
+*.sql
+
+# HTML test files
+*.html
+!public/**/*.html
+
+# Development documentation
+DEVELOPMENT_ROADMAP.md
+EMAIL_NOTIFICATION_SETUP.md
+FINAL_SUMMARY.md
+IMPLEMENTATION_COMPLETE.md
+NEXT_STEPS.md
+OPTIMIZATION_SUMMARY.md
+PROJECT_STATUS.md
+QUICK_START.md
+REAL_WORLD_INTEGRATION_SETUP.md
+SESSION_PROGRESS.md
+SETUP_INSTRUCTIONS.md
+UPDATE_INSTRUCTIONS.md
+
+# Vercel config
+vercel.json
+

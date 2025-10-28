@@ -1,0 +1,43 @@
+{
+  "name": "MediQueue - Smart Hospital Queue Management",
+  "short_name": "MediQueue",
+  "description": "Book same-day appointments with emergency prioritization across multi-hospital network",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "medical", "productivity"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Book Appointment",
+      "short_name": "Book",
+      "description": "Book a new appointment",
+      "url": "/hospitals",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Emergency",
+      "short_name": "Emergency",
+      "description": "Emergency booking",
+      "url": "/emergency",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
+
