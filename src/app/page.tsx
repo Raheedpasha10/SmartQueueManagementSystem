@@ -11,14 +11,17 @@ import {
   CheckCircle,
   User,
 } from "lucide-react";
+import { AuthHandler } from "@/components/auth/auth-handler";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
   // Check if user is authenticated
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  
   return (
     <div className="flex min-h-screen flex-col">
+      <AuthHandler />
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto flex h-20 items-center justify-between px-6">

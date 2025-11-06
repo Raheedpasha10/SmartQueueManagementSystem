@@ -1,23 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, Loader2 } from "lucide-react";
+import { Heart, Loader2, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  // Check for verification messages from email confirmation
+  useEffect(() => {
+    if (searchParams.get("verified") === "true") {
+      toast.success("Email verified successfully!", {
+        description: "You can now log in to your account.",
+      });
+      // Clean up URL
+      router.replace("/login");
+    } else if (searchParams.get("error") === "verification_failed") {
+      const message = searchParams.get("message");
+      toast.error("Email verification failed", {
+        description: message || "The verification link may have expired. Please try registering again.",
+      });
+      router.replace("/login");
+    } else if (searchParams.get("error") === "invalid_link") {
+      toast.error("Invalid verification link", {
+        description: "The verification link is invalid. Please try registering again.",
+      });
+      router.replace("/login");
+    }
+  }, [searchParams, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +56,18 @@ export default function LoginPage() {
       });
 
       if (error) {
+        // Check for email not confirmed error
+        if (
+          error.message.includes("Email not confirmed") ||
+          error.message.includes("email_not_confirmed") ||
+          error.message.includes("Email not verified")
+        ) {
+          toast.error("Email not verified", {
+            description: "Please check your email and click the verification link before logging in.",
+            duration: 6000,
+          });
+          return;
+        }
         throw error;
       }
 
@@ -98,15 +134,30 @@ export default function LoginPage() {
                     Forgot password?
                   </Link>
                 </div>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  required
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    required
+                    disabled={isLoading}
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                    disabled={isLoading}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <Button type="submit" className="w-full" disabled={isLoading}>

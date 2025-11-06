@@ -13,6 +13,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { DashboardAppointments } from "@/components/dashboard/dashboard-appointments";
+import { VerificationMessage } from "@/components/dashboard/verification-message";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -61,6 +62,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <VerificationMessage />
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold">Welcome Back!</h1>
